@@ -1,7 +1,8 @@
 /// DTO for profile update request.
-///
-/// Only includes nullable fields — backend merges with existing data.
 class UpdateProfileRequest {
+  final String? name;
+  final String? email;
+  final String? phone;
   final String? bio;
   final String? address;
   final String? city;
@@ -18,6 +19,9 @@ class UpdateProfileRequest {
   final String? whatsapp;
 
   const UpdateProfileRequest({
+    this.name,
+    this.email,
+    this.phone,
     this.bio,
     this.address,
     this.city,
@@ -35,13 +39,17 @@ class UpdateProfileRequest {
   });
 
   Map<String, dynamic> toJson() => {
+        if (name != null) 'name': name,
+        if (email != null) 'email': email,
+        if (phone != null) 'phone': phone,
         if (bio != null) 'bio': bio,
         if (address != null) 'address': address,
         if (city != null) 'city': city,
         if (province != null) 'province': province,
         if (postalCode != null) 'postal_code': postalCode,
         if (country != null) 'country': country,
-        if (dateOfBirth != null) 'date_of_birth': dateOfBirth!.toIso8601String(),
+        if (dateOfBirth != null)
+          'date_of_birth': dateOfBirth!.toIso8601String(),
         if (gender != null) 'gender': gender,
         if (occupation != null) 'occupation': occupation,
         if (website != null) 'website': website,
@@ -49,5 +57,18 @@ class UpdateProfileRequest {
         if (instagram != null) 'instagram': instagram,
         if (twitter != null) 'twitter': twitter,
         if (whatsapp != null) 'whatsapp': whatsapp,
+      };
+}
+
+/// DTO for MOE Laravel key-value profile write.
+class SetProfileKeyRequest {
+  final String key;
+  final dynamic value;
+
+  const SetProfileKeyRequest({required this.key, this.value});
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'value': value,
       };
 }
