@@ -9,7 +9,7 @@ dependencies:
   moe_flutter_profiles:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Profiles.git
-      ref: master
+      ref: main
 ```
 
 ## Usage

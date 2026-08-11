@@ -30,11 +30,14 @@ final class ProfileError extends ProfileState {
 }
 
 /// Notifier for profile data.
+///
+/// Loads profile on init, supports update + avatar upload.
 class ProfileNotifier extends StateNotifier<ProfileState> {
   final ProfileRepository _repository;
 
   ProfileNotifier(this._repository) : super(const ProfileInitial());
 
+  /// Load profile from backend.
   Future<void> loadProfile() async {
     state = const ProfileLoading();
 
@@ -48,66 +51,38 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     }
   }
 
+  /// Update profile.
   Future<void> updateProfile(UpdateProfileRequest request) async {
-    final previous = state;
-    state = const ProfileLoading();
-
     final result = await _repository.updateProfile(request);
 
     switch (result) {
       case Ok(:final data):
-        final merged = previous is ProfileLoaded
-            ? data.copyWith(
-                keyValueProfiles:
-                    data.keyValueProfiles ?? previous.profile.keyValueProfiles,
-              )
-            : data;
-        state = ProfileLoaded(merged);
+        state = ProfileLoaded(data);
       case Err(:final failure):
         state = ProfileError(failure);
     }
   }
 
+  /// Upload avatar.
   Future<AppResult<String>> uploadAvatar(String filePath) async {
-    final result = await _repository.uploadAvatar(filePath);
-    if (result is Ok<String>) {
-      await loadProfile();
-    }
-    return result;
+    return await _repository.uploadAvatar(filePath);
   }
 
+  /// Delete avatar.
   Future<void> deleteAvatar() async {
     await _repository.deleteAvatar();
     await loadProfile();
   }
-
-  Future<AppResult<Map<String, dynamic>>> setProfileKey({
-    required String key,
-    dynamic value,
-  }) async {
-    final result = await _repository.setProfileKey(
-      SetProfileKeyRequest(key: key, value: value),
-    );
-
-    if (result case Ok(:final data)) {
-      final current = state;
-      if (current is ProfileLoaded) {
-        state = ProfileLoaded(
-          current.profile.copyWith(keyValueProfiles: data),
-        );
-      }
-    }
-
-    return result;
-  }
 }
 
+/// Provider for ProfileRepository.
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
   final dio = ref.watch(dioProvider);
   final config = ref.watch(profilesConfigProvider);
   return ProfileRepository(dio, config);
 });
 
+/// Provider for ProfileNotifier.
 final profileProvider =
     StateNotifierProvider<ProfileNotifier, ProfileState>((ref) {
   return ProfileNotifier(ref.watch(profileRepositoryProvider));
