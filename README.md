@@ -1,6 +1,6 @@
 # MOE-Flutter-Profiles
 
-Profiles package for MOE Flutter ecosystem — user profile CRUD, avatar upload, preferences.
+Profiles package for MOE Flutter ecosystem â€” user profile CRUD, avatar upload, preferences.
 
 ## Installation
 
@@ -9,7 +9,7 @@ dependencies:
   moe_flutter_profiles:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Profiles.git
-      ref: master
+      ref: v1.0.0
 ```
 
 ## Usage
