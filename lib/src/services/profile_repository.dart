@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:moe_flutter_core/moe_flutter_core.dart';
 import 'package:moe_flutter_profiles/src/config/profiles_config.dart';
@@ -29,10 +28,12 @@ class ProfileRepository {
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(
+        AppFailure(
+          type: FailureType.unknown,
+          message: e.toString(),
+        ),
+      );
     }
   }
 
@@ -40,7 +41,8 @@ class ProfileRepository {
   ///
   /// Backend: `PUT /profile` → `{profile}`.
   Future<AppResult<ProfileModel>> updateProfile(
-      UpdateProfileRequest request) async {
+    UpdateProfileRequest request,
+  ) async {
     try {
       final response =
           await _dio.put(_config.profileEndpoint, data: request.toJson());
@@ -52,10 +54,12 @@ class ProfileRepository {
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(
+        AppFailure(
+          type: FailureType.unknown,
+          message: e.toString(),
+        ),
+      );
     }
   }
 
@@ -72,22 +76,26 @@ class ProfileRepository {
         data: formData,
       );
       final data = response.data as Map<String, dynamic>;
-      final avatarUrl = data['avatar_url'] as String? ??
-          data['avatar'] as String?;
+      final avatarUrl =
+          data['avatar_url'] as String? ?? data['avatar'] as String?;
       if (avatarUrl == null) {
-        return const Err(AppFailure(
-          type: FailureType.unknown,
-          message: 'Avatar URL tidak ditemukan di response.',
-        ));
+        return const Err(
+          AppFailure(
+            type: FailureType.unknown,
+            message: 'Avatar URL tidak ditemukan di response.',
+          ),
+        );
       }
       return Ok(avatarUrl);
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(
+        AppFailure(
+          type: FailureType.unknown,
+          message: e.toString(),
+        ),
+      );
     }
   }
 
@@ -101,10 +109,12 @@ class ProfileRepository {
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));
     } catch (e) {
-      return Err(AppFailure(
-        type: FailureType.unknown,
-        message: e.toString(),
-      ));
+      return Err(
+        AppFailure(
+          type: FailureType.unknown,
+          message: e.toString(),
+        ),
+      );
     }
   }
 }

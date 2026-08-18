@@ -4,6 +4,7 @@
 /// ```dart
 /// import 'package:moe_flutter_profiles/moe_flutter_profiles.dart';
 /// ```
+library;
 
 // Config
 export 'src/config/profiles_config.dart';
