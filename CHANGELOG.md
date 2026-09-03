@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 — 2026-09-03
+
+### Changed
+- Internal pin `moe_flutter_auth` → `v1.0.1` (401-handler fix).
+
 ## 1.0.0 — 2026-08-10
 
 ### Added
