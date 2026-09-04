@@ -21,7 +21,7 @@ dependencies:
   moe_flutter_auth:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Auth.git
-      ref: v1.0.1
+      ref: v1.0.2
 
 dev_dependencies:
   flutter_test:
