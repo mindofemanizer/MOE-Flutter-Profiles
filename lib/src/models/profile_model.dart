@@ -44,7 +44,7 @@ class ProfileModel {
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
       id: json['id'] as int?,
-      userId: json['user_id'] as int,
+      userId: (json['user_id'] as int?) ?? 0,
       bio: json['bio'] as String?,
       address: json['address'] as String?,
       city: json['city'] as String?,
