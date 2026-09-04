@@ -1,6 +1,6 @@
 name: moe_flutter_profiles
 description: Profiles package for MOE Flutter ecosystem — user profile CRUD, avatar upload, preferences
-version: 1.0.3
+version: 1.0.4
 publish_to: 'none'
 
 environment:
@@ -21,7 +21,7 @@ dependencies:
   moe_flutter_auth:
     git:
       url: https://github.com/mindofemanizer/MOE-Flutter-Auth.git
-      ref: v1.0.3
+      ref: v1.0.4
 
 dev_dependencies:
   flutter_test:
