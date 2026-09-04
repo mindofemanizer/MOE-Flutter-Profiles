@@ -21,9 +21,15 @@ class ProfileRepository {
     try {
       final response = await _dio.get(_config.profileEndpoint);
       final data = response.data as Map<String, dynamic>;
+      // Handle multiple response formats:
+      // - { "profile": {...} }
+      // - { "user": {...} }  (from GET /me)
+      // - raw profile object
       final profileJson = data.containsKey('profile')
           ? data['profile'] as Map<String, dynamic>
-          : data;
+          : data.containsKey('user')
+              ? data['user'] as Map<String, dynamic>
+              : data;
       return Ok(ProfileModel.fromJson(profileJson));
     } on DioException catch (e) {
       return Err(mapDioErrorToFailure(e));

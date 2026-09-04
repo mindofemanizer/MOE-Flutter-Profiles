@@ -1,6 +1,6 @@
 name: moe_flutter_profiles
 description: Profiles package for MOE Flutter ecosystem — user profile CRUD, avatar upload, preferences
-version: 1.0.2
+version: 1.0.3
 publish_to: 'none'
 
 environment:
